@@ -1,9 +1,8 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Home from "./components/Home/Home";
-import React, { createContext, useState } from "react";
+import React, { createContext } from "react";
 import "./app.css"
 import AppContextProvider from "./components/Context/AppContext";
-// import EnglishV from "./components/auth/EnglishV";
 
 export const Context = createContext();
 
@@ -16,7 +15,6 @@ function App() {
         <Routes>
           <Route exact path="/" element={<Home></Home>}></Route>
           <Route path="/unlimited" element={<Home></Home>}></Route>
-          <Route path="/login" element={<Home></Home>}></Route>
         </Routes>
       </BrowserRouter>
     </AppContextProvider>

@@ -1,5 +1,4 @@
 import React, { useContext, useEffect } from "react";
-import { useState } from "react";
 import { AppContext } from "../../Context/AppContext";
 import boardStyles from "./boardStyles.css";
 import Letter from "./Letter";
@@ -19,7 +18,9 @@ export default function Board() {
     const storedState = JSON.parse(localStorage.getItem([version]))
     const streak = storedState && (window.location.pathname === "/" ? storedState.streakDL : storedState.streakUL)
 
-    // let showPopUp = false;
+    const popUpHandler = ()=> {
+        setPopUp({popup: false, overPopUp: false})
+    }
 
     const rows = board.map((val, i, e) =>
     (<div className="row" key={i}>
@@ -29,17 +30,15 @@ export default function Board() {
     </div>))
 
     useEffect(()=> {
-        if (showPopUp.popup) {
-            setTimeout(() => {
-                setPopUp({popup: false})
-            }, 3000)
+        if (showPopUp.popup || showPopUp.overPopUp) {
+            setTimeout(popUpHandler, 1650)
         }
     }, [showPopUp])
 
     return (
         <div>
             <div className="board">
-                {currentTry.gameOver === true &&
+                {showPopUp.overPopUp === true &&
                     <div className="success-popup">
                         {streak === true ? solvedMessage : failedMessage}
                     </div>

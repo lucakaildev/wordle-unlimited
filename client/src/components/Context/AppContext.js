@@ -6,7 +6,7 @@ export const AppContext = createContext();
 
 export default function AppContextProvider(props) {
 
-    const [showPopUp, setPopUp] = useState({popup: false})
+    const [showPopUp, setPopUp] = useState({popup: false, overPopUp: false})
 
     const [currentTry, setCurrentTry] = useState({
         currentRow: 0,
@@ -34,11 +34,11 @@ export default function AppContextProvider(props) {
 
     const [language, setLanguage] = useState(localStorage.getItem("language") ? localStorage.getItem("language") : "english")
 
-    const firstRowArray = Array.from("QWERTYUIOP");
+    const firstRowArray = Array.from("QWERTYUIOP↺");
     const secondRowArray = Array.from("ASDFGHJKL");
     const thirdRowArray = Array.from("ENTER Z X C V B N M ⌫".split(" "));
 
-    const [board, setBoard] = useState([
+    const [board, setBoard] = useState([ 
         [[""], [""], [""], [""], [""]],
         [[""], [""], [""], [""], [""]],
         [[""], [""], [""], [""], [""]],
@@ -55,7 +55,6 @@ export default function AppContextProvider(props) {
     const location = window.location.pathname;
 
     const refreshBoard = (e) => {
-        e.preventDefault();
         const version = language === "english" ? "engVersion" : language === "portuguese" ? "brVersion" : "spanishVersion"
         if (localStorage.getItem([version])) {
             const storedState = JSON.parse(localStorage.getItem([version]));
@@ -85,7 +84,7 @@ export default function AppContextProvider(props) {
 
     const changeLocation = (e) => {
         e.preventDefault();
-        window.location.pathname = e.target.id;
+        window.location.pathname = e.target.id || e.target.value
     }
     const changeLanguage = (e) => {
         e.preventDefault();
@@ -95,7 +94,7 @@ export default function AppContextProvider(props) {
     useEffect(() => {
         const version = language === "english" ? "engVersion" : language === "portuguese" ? "brVersion" : "spanishVersion"
         localStorage.setItem("language", language)
-        axios.get(`http://localhost:8001/words/${language}`)
+        axios.get(`https://wordleunlimited-byluca.herokuapp.com/words/${language}`)
             .then(res => {
 
                 const words = res.data;
@@ -325,6 +324,8 @@ export default function AppContextProvider(props) {
 
                     setCurrentTry((prevState) => ({ ...prevState, currentRow: prevState.currentRow + 1, gameOver: true }))
 
+                    setPopUp({...showPopUp, overPopUp: true})
+
                     const modalInterval = setInterval(() => {
                         setStatsModal(true)
                         clearInterval(modalInterval)
@@ -364,6 +365,8 @@ export default function AppContextProvider(props) {
                         }));
 
                     setCurrentTry((prevState) => ({ ...prevState, currentRow: prevState.currentRow + 1, gameOver: true }))
+
+                    setPopUp({...showPopUp, overPopUp: true})
 
                     const modalInterval = setInterval(() => {
                         setStatsModal(true)

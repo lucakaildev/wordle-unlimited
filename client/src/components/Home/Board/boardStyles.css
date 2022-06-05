@@ -7,7 +7,7 @@
 
 .success-popup {
     background-color: rgba(161, 184, 173, 0.767);
-    opacity: 100%;
+    opacity: 1;
     color: white;
     font-family: 'Helvetica Neue', sans-serif;
     width: 21rem;
@@ -22,7 +22,7 @@
 
 .dictionary-popup {
     background-color: rgba(161, 184, 173, 0.767);
-    opacity: 100%;
+    opacity: 1;
     color: white;
     font-family: 'Helvetica Neue', sans-serif;
     width: 21rem;
@@ -38,9 +38,9 @@
 @keyframes drop {
     0%{}
     50%{}
-    70%{transform: translateY(500px); opacity: 100%;}
-    80%{opacity: 50%;}
-    100%{transform: translateY(450px); opacity: 0%;}
+    70%{transform: translateY(500px); opacity: 1;}
+    80%{opacity: 0.5;}
+    100%{transform: translateY(450px); opacity: 1;}
     
 }
 

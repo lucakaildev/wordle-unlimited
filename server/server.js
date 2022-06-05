@@ -12,7 +12,7 @@ mongoose.connect("mongodb+srv://lucakail:theevilz4204@cluster0.c0gud.mongodb.net
 server.use(express.json());
 
 server.use((req, res, next) => {
-    res.header("Access-Control-Allow-Origin", "https://wordleunlimited-byluca.web.app");
+    res.header("Access-Control-Allow-Origin", "*");
     res.header("Access-Control-Allow-Credentials", "true");
     res.header(
         "Access-Control-Allow-Headers",
@@ -29,6 +29,6 @@ server.use((err, req, res, next) => {
 })
 
 
-server.listen(8001, (req, res) => {
-    console.log("Server running on port 8001")
+server.listen(process.env.PORT || 3001, (req, res) => {
+    console.log("Server running")
 })
