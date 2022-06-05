@@ -9,15 +9,19 @@
     display: flex;
     flex-direction: column;
     justify-content: space-around;
-    align-items: center;
+    /* align-items: center; */
+}
+
+.keyboard-one {
+    display: flex;
+    justify-content: space-around;
+    width: 115%;
 }
 
 .keyboard-row {
     display: flex;
     justify-content: space-around;
     width: 105%;
-    /* background-color: aqua; */
-    /* color: #000; */
 }
 
 
@@ -27,6 +31,21 @@
     font-family: 'Helvetica Neue', sans-serif;
     color: white;
     background-color: #edf2f59c;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 2.8rem;
+    height: 2.9rem;
+    border-radius: 5px;
+}
+
+.reload-button {
+    font-size: 2rem;
+    outline: none;
+    border: none;
+    font-family: 'Helvetica Neue', sans-serif;
+    color: white;
+    background-color: #000;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -118,4 +137,117 @@
     width: 4rem;
     height: 2.9rem;
     border-radius: 5px;
+}
+
+@media all and (max-width:500px) {
+    .keyboard {
+        background-color: #000;
+        width: 23rem;
+        height: 9.5rem;
+        margin-left: auto;
+        margin-right: auto;
+        margin-top: 2rem;
+        margin-bottom: 2rem;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+        align-items: center;
+    }
+    .keyboard-letter {
+        outline: none;
+        border: none;
+        font-family: 'Helvetica Neue', sans-serif;
+        color: white;
+        background-color: #edf2f59c;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 2.5rem;
+        height: 2.6rem;
+        border-radius: 5px;
+    }
+    .keyboard-letter-disabled {
+        outline: none;
+        border: none;
+    
+        font-family: 'Helvetica Neue', sans-serif;
+        color: white;
+        background-color: #5d6c759c;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 2.5rem;
+        height: 2.6rem;
+        border-radius: 5px;
+    }
+    
+    .keyboard-letter-2 {
+        outline: none;
+        border: none;
+        font-family: 'Helvetica Neue', sans-serif;
+        color: white;
+        background-color: #edf2f59c;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 2.8rem;
+        height: 2.6rem;
+        border-radius: 5px;
+    }
+    
+    .keyboard-letter-2-disabled {
+        outline: none;
+        border: none;
+        font-family: 'Helvetica Neue', sans-serif;
+        color: white;
+        background-color: #5d6c759c;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 2.5rem;
+        height: 2.6rem;
+        border-radius: 5px;
+    }
+    
+    .keyboard-letter-3 {
+        outline: none;
+        border: none;
+        font-family: 'Helvetica Neue', sans-serif;
+        color: white;
+        background-color: #edf2f59c;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 2.6rem;
+        height: 2.6rem;
+        border-radius: 5px;
+    }
+    
+    .keyboard-letter-3-disabled {
+        outline: none;
+        border: none;
+        font-family: 'Helvetica Neue', sans-serif;
+        color: white;
+        background-color: #5d6c759c;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 2.5rem;
+        height: 2.6rem;
+        border-radius: 5px;
+    }
+    
+    .keyboard-letter-big {
+        outline: none;
+        border: none;
+        font-family: 'Helvetica Neue', sans-serif;
+        color: white;
+        background-color: #edf2f59c;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 3.7rem;
+        height: 2.6rem;
+        border-radius: 5px;
+    }
 }

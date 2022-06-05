@@ -1,5 +1,6 @@
 import React, { useContext, useEffect, useState } from "react"
 import { AppContext } from "../../Context/AppContext";
+import { useMediaQuery } from "react-responsive";
 import "./statsStyles.css"
 import TwitterLogo from "./twitterlogo.png"
 import FacebookIcon from "./fbicon.png"
@@ -33,7 +34,7 @@ export default function Stats() {
 
     const storedStats = localStorage.getItem([version]) && JSON.parse(localStorage.getItem([version]))
 
-    const { playedDL, wonDL, streakDL, currentStreakDL, maxStreakDL, playedUL, wonUL, streakUL, currentStreakUL, maxStreakUL, graphDataDL, graphDataUL } = storedStats;
+    const { playedDL, wonDL, currentStreakDL, maxStreakDL, playedUL, wonUL, currentStreakUL, maxStreakUL, graphDataDL, graphDataUL } = storedStats;
 
     const lostDL = playedDL - wonDL;
     const lostUL = playedUL - wonUL;
@@ -55,60 +56,91 @@ export default function Stats() {
     useEffect(() => {
         const intervalId = setInterval(() => {
             const { seconds, minutes, hours } = getRemaining(tomorrow)
-            // console.log(seconds)
             setRemaining(`${hours > 9 ? hours : "0" + hours}:${minutes > 9 ? minutes : "0" + minutes}:${seconds > 9 ? seconds : "0" + seconds}`)
         }, 1000)
         return () => clearInterval(intervalId);
     })
 
-    // Twitter Intent Api:-  `https://twitter.com/intent/tweet?text=`;
-
     const shareOnFb = (e) => {
 
+        e.preventDefault();
+
         if (currentTry.gameOver) {
+            
 
-            e.preventDefault();
-
-            const lang = language === "english" ? "EN" : language === "portuguese" ? "BR" : "ES"
-            const wordle = `#${wordState.wordleNumber}`
-
-            const msg = `Wordle (${lang}) #${wordle}\n\n${emojiTiles[0].join("")}\n${emojiTiles[1].join("")}\n${emojiTiles[2].join("")}\n${emojiTiles[3].join("")}\n${emojiTiles[4].join("")}\n${emojiTiles[5].join("")}\n\nVisit https://mysite.com to play!`
+            const msg = `wordleunlimited-byluca.web.app`
 
             window.open('http://facebook.com/sharer/sharer.php?u=' + encodeURIComponent(msg))
         }
     }
 
     const shareOnTwitter = (e) => {
+        
+        e.preventDefault();
 
         if (currentTry.gameOver) {
 
             const lang = language === "english" ? "EN" : language === "portuguese" ? "BR" : "ES"
             const wordle = wordState.wordleNumber
 
+            if (window.location.pathname === "/") {
+                const msg = `Wordle (${lang}) #${wordle}\n\n${emojiTiles[0].join("")}\n${emojiTiles[1].join("")}\n${emojiTiles[2].join("")}\n${emojiTiles[3].join("")}\n${emojiTiles[4].join("")}\n${emojiTiles[5].join("")}\n\n Play Wordle Unlimited at https://wordleunlimited-byluca.web.app`
 
-            const msg = `Wordle (${lang}) #${wordle}\n\n${emojiTiles[0].join("")}\n${emojiTiles[1].join("")}\n${emojiTiles[2].join("")}\n${emojiTiles[3].join("")}\n${emojiTiles[4].join("")}\n${emojiTiles[5].join("")}\n\n Visit https://mysite.com to play!`
+                window.open('https://twitter.com/intent/tweet?text=' + encodeURIComponent(msg));
+            }
 
-            e.preventDefault();
-            const navUrl =
-                'https://twitter.com/intent/tweet?text=' + encodeURIComponent(msg);
-            window.open(navUrl);
+            if (window.location.pathname === "/unlimited") {
+                const msg = `Wordle Unlimited (${lang}) \n\n${emojiTiles[0].join("")}\n${emojiTiles[1].join("")}\n${emojiTiles[2].join("")}\n${emojiTiles[3].join("")}\n${emojiTiles[4].join("")}\n${emojiTiles[5].join("")}\n\n Play Wordle Unlimited at https://wordleunlimited-byluca.web.app`
 
+                window.open('https://twitter.com/intent/tweet?text=' + encodeURIComponent(msg));
+
+            }
+       
+                
         }
-
+        
     }
 
+    const isMobile = useMediaQuery({ query: `(max-width: 500px)` })
+    
     const shareOnWpp = (e) => {
 
         if (currentTry.gameOver) {
 
+            e.preventDefault();
+
             const lang = language === "english" ? "EN" : language === "portuguese" ? "BR" : "ES"
             const wordle = wordState.wordleNumber
 
+            if (window.location.pathname === "/") {
+                const msg = `Wordle (${lang}) #${wordle}\n\n${emojiTiles[0].join("")}\n${emojiTiles[1].join("")}\n${emojiTiles[2].join("")}\n${emojiTiles[3].join("")}\n${emojiTiles[4].join("")}\n${emojiTiles[5].join("")}\n\n Play Wordle Unlimited at https://wordleunlimited-byluca.web.app`
 
-            const msg = `Wordle (${lang}) #${wordle}\n\n${emojiTiles[0].join("")}\n${emojiTiles[1].join("")}\n${emojiTiles[2].join("")}\n${emojiTiles[3].join("")}\n${emojiTiles[4].join("")}\n${emojiTiles[5].join("")}\n\n Visit https://mysite.com to play!`
+                if (isMobile) {
+                    window.open('whatsapp://send?text=' + encodeURIComponent(msg));
+                }
+                if (!isMobile) {
+                    window.open('https://web.whatsapp.com/send?text=' + encodeURIComponent(msg))
+                }
+            }
 
-            e.preventDefault();
-            window.open('whatsapp://send?text=' + encodeURIComponent(msg));
+            if (window.location.pathname === "/unlimited") {
+
+                const msg = `Wordle Unlimited (${lang})\n\n${emojiTiles[0].join("")}\n${emojiTiles[1].join("")}\n${emojiTiles[2].join("")}\n${emojiTiles[3].join("")}\n${emojiTiles[4].join("")}\n${emojiTiles[5].join("")}\n\n Play Wordle Unlimited at https://wordleunlimited-byluca.web.app`
+
+                if (isMobile) {
+                    window.open('whatsapp://send?text=' + encodeURIComponent(msg));
+                }
+                if (!isMobile) {
+                    window.open('https://web.whatsapp.com/send?text=' + encodeURIComponent(msg))
+                }
+
+            }
+    
+    
+    
+
+        
+
         }
     }
 
@@ -117,13 +149,20 @@ export default function Stats() {
         if (currentTry.gameOver) {
             const lang = language === "english" ? "EN" : language === "portuguese" ? "BR" : "ES"
             const wordle = wordState.wordleNumber
-
-
-            const msg = `Wordle (${lang}) #${wordle}\n\n${emojiTiles[0].join("")}\n${emojiTiles[1].join("")}\n${emojiTiles[2].join("")}\n${emojiTiles[3].join("")}\n${emojiTiles[4].join("")}\n${emojiTiles[5].join("")}\n\n Visit https://mysite.com to play!`
-
             e.preventDefault();
 
-            window.open(`https://t.me/share/url?url=${encodeURIComponent(msg)}`);
+            if (window.location.pathname === "/") {
+                const msg = `Wordle (${lang}) #${wordle}\n\n${emojiTiles[0].join("")}\n${emojiTiles[1].join("")}\n${emojiTiles[2].join("")}\n${emojiTiles[3].join("")}\n${emojiTiles[4].join("")}\n${emojiTiles[5].join("")}\n\n Play Wordle Unlimited at https://wordleunlimited-byluca.web.app`
+    
+    
+                window.open(`https://t.me/share/url?url=${encodeURIComponent(msg)}`);
+            }
+            if (window.location.pathname === "/unlimited") {
+                const msg = `Wordle Unlimited (${lang})\n\n${emojiTiles[0].join("")}\n${emojiTiles[1].join("")}\n${emojiTiles[2].join("")}\n${emojiTiles[3].join("")}\n${emojiTiles[4].join("")}\n${emojiTiles[5].join("")}\n\n Play Wordle Unlimited at https://wordleunlimited-byluca.web.app`
+    
+    
+                window.open(`https://t.me/share/url?url=${encodeURIComponent(msg)}`);
+            }
         }
     }
 
@@ -152,28 +191,12 @@ export default function Stats() {
                     if ((board[i][j][0] === "") || (!board[i][j][0]) || (!wordState.correctWord.includes(board[i][j][0].toLowerCase()))) {
                         emojiTiles[i][j] = "⬛"
                     }
-
-                    // console.log(board[i][j].toLowerCase() === wordState.correctWord[j], wordState.correctWord.includes(board[i][j].toLowerCase()))
-                    // if (board[i][j].toLowerCase === wordState.correctWord[j]) {
-                    // emojiTiles[i][j] = "a"
-                    // }
-                    // if (!board[i][j].toLowerCase === wordState.correctWord[j] && wordState.correctWord.includes(board[i][j].toLowerCase)) {
-                    //     emojiTiles[i][j] = "a"
-                    // }
-                    // if (!wordState.correctWord.includes(board[i][j].toLowerCase())) {
-                    //     emojiTiles[i][j] = "nara"
-                    // }
                 }
             }
-            // return `${emojiTiles[0].join("")} \n ${emojiTiles[1].join("")} \n${emojiTiles[2].join("")} \n${emojiTiles[3].join("")} \n${emojiTiles[4].join("")} \n${emojiTiles[5].join("")} \n`
         }
     }
 
     getTiles();
-
-    // console.log(wordState.correctWord[4] === board[0][3].toLowerCase())
-    // console.log(wordState.correctWord.includes(board[0][0].toLowerCase()))
-
 
     return (
         <div className="modal-bg">
@@ -268,10 +291,10 @@ export default function Stats() {
                             <button className="play-again-button" id="/unlimited" onClick={(e) => refreshBoard(e)}>{language === "english" ? "PLAY UNLIMITED" : language === "portuguese" ? "JOGAR DE NOVO" : "JUGAR DE NUEVO"}</button>
                         </div>
                         <div className="share-container">
-                            <button className="share-button" onClick={(e) => { shareOnTwitter(e) }}><img src={TwitterLogo} className="tw-logo"></img></button>
-                            <button className="share-button" onClick={(e) => { shareOnFb(e) }}><img src={FacebookIcon} className="tw-logo"></img></button>
-                            <button className="share-button" onClick={(e) => { shareOnTelegram(e) }}><img src={TelegramIcon} className="tw-logo"></img></button>
-                            <button className="share-button" onClick={(e) => { shareOnWpp(e) }}><img src={WhatsappIcon} className="tw-logo"></img></button>
+                            <button className="share-button" onClick={(e) => { shareOnTwitter(e) }}><img src={TwitterLogo} alt="tw-share" className="tw-logo"></img></button>
+                            <button className="share-button" onClick={(e) => { shareOnFb(e) }}><img src={FacebookIcon} alt="fb-share" className="tw-logo"></img></button>
+                            <button className="share-button" onClick={(e) => { shareOnTelegram(e) }}><img src={TelegramIcon} alt="tg-share" className="tw-logo"></img></button>
+                            <button className="share-button" onClick={(e) => { shareOnWpp(e) }}><img src={WhatsappIcon} alt="wp-share" className="tw-logo"></img></button>
                         </div>
                     </div>
 
@@ -296,10 +319,6 @@ export default function Stats() {
                             <button className="close-button" onClick={(e) => { changeStatsModal(e) }}>X</button>
                         </div>
                     </div>
-                    {/* <div className="mode-button-container">
-                        <button className="daily-button" onClick={() => { setMode("daily") }}>DAILY</button>
-                        <button className="ul-button" onClick={() => { setMode("unlimited") }}>UNLIMITED</button>
-                    </div> */}
                     <div className="stats-container">
                         <div className="stats-item-container">
                             <p className="stats-item">{playedUL ? playedUL : 0}</p>
@@ -363,14 +382,13 @@ export default function Stats() {
                     </div>
                     <div className="over-container">
                         <div className="share-container">
-                        </div><div className="share-container">
-                            <button className="share-button" onClick={(e) => { shareOnTwitter(e) }}><img src={TwitterLogo} className="tw-logo"></img></button>
-                            <button className="share-button" onClick={(e) => { shareOnFb(e) }}><img src={FacebookIcon} className="tw-logo"></img></button>
-                            <button className="share-button" onClick={(e) => { shareOnTelegram(e) }}><img src={TelegramIcon} className="tw-logo"></img></button>
-                            <button className="share-button" onClick={(e) => { shareOnWpp(e) }}><img src={WhatsappIcon} className="tw-logo"></img></button>
+                            <button className="play-again-button" id="/unlimited" onClick={(e) => refreshBoard(e)}>{language === "english" ? "PLAY AGAIN" : language === "portuguese" ? "JOGAR DE NOVO" : "JUGAR DE NUEVO"}</button>
                         </div>
                         <div className="share-container">
-                            <button className="play-again-button" id="/unlimited" onClick={(e) => refreshBoard(e)}>{language === "english" ? "PLAY AGAIN" : language === "portuguese" ? "JOGAR DE NOVO" : "JUGAR DE NUEVO"}</button>
+                            <button className="share-button" onClick={(e) => { shareOnTwitter(e) }}><img src={TwitterLogo} alt="tw-share" className="tw-logo"></img></button>
+                            <button className="share-button" onClick={(e) => { shareOnFb(e) }}><img src={FacebookIcon} alt="fb-share" className="tw-logo"></img></button>
+                            <button className="share-button" onClick={(e) => { shareOnTelegram(e) }}><img src={TelegramIcon} alt="tg-share" className="tw-logo"></img></button>
+                            <button className="share-button" onClick={(e) => { shareOnWpp(e) }}><img src={WhatsappIcon} alt="wp-share" className="tw-logo"></img></button>
                         </div>
                     </div>
                 </div>

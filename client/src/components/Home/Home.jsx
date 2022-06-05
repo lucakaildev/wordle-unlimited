@@ -1,5 +1,4 @@
-import React, { useCallback, useContext, useEffect, useState } from "react";
-import { NavLink, Link } from "react-router-dom"
+import React, { useContext, useEffect } from "react";
 import Board from "./Board/Board";
 import Keyboard from "./Keyboard/Keyboard";
 import "./homescreenStyles.css"
@@ -54,9 +53,6 @@ export default function Home() {
     return (
         <div className="homescreen">
             <header>
-                <div className="logo-container">
-                    <h1><span className="text-decoration1">WORDLE</span><br></br> <span className="text-decoration2">UNLIMITED.</span></h1>
-                </div>
                 <Nav></Nav>
             </header>
             <Board />
